@@ -34,29 +34,27 @@ int goto_tbl[12][3] = {
 };
 
 char lhs[] = {' ', 'E', 'E', 'T', 'T', 'F', 'F'}; 
-int rhs_len[] = {0, 3, 1, 3, 1, 3, 1}; /
+int rhs_len[] = {0, 3, 1, 3, 1, 3, 1};
 char token[] = {'d', '+', '*', '(', ')', '$'};
 char NT[] = {' ', 'E', 'T', 'F'}; 
 int stack[MAX], sp = -1; 
 
-// Function to find the index of token in the token array
-int get_token_index(char c) {
+int get_token(char %d ) {
     for (int i = 0; i < 6; i++) {
         if (token[i] == c) return i;
     }
-    return -1; // return -1 if token not found
+    return -1;
 }
 
-// Function to find the index of a non-terminal in the NT array
-int get_nt_index(char c) {
+int get_nt(char c) {
     for (int i = 0; i < 4; i++) {
         if (NT[i] == c) return i;
     }
-    return -1; // return -1 if non-terminal not found
+    return -1; 
 }
 
 void perform_action(int action, int* sp, int* stack, char** input_ptr, int* ip) {
-    if (action > 0) { // shift action
+    if (action > 0) {
         printf("shift %d\n", action);
         stack[++(*sp)] = action;
         (*input_ptr)++;
@@ -65,9 +63,9 @@ void perform_action(int action, int* sp, int* stack, char** input_ptr, int* ip) 
         printf("reduce by rule %d\n", -action);
         int rule = -action;
         *sp -= rhs_len[rule];
-        int goto_state = goto_tbl[stack[*sp]][get_nt_index(lhs[rule])];
+        int goto_state = goto_tbl[stack[*sp]][get_nt(lhs[rule])];
         stack[++(*sp)] = goto_state;
-    } else if (action == 999) { // accept
+    } else if (action == 999) { 
         printf("accept\n");
     } else { // error
         printf("error\n");
