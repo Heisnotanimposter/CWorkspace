@@ -10,7 +10,6 @@ int NT_len[] = {0, 1, 1, 1, 1, 1, 1};
 char *GR[] = {' ', 'E+T', 'T', 'T*F' , 'F' ,'(E)' ,'d'};
 int GR_len[] = {0, 3, 1, 3, 1, 3, 1};
 
-
 char tokens[] = {' ', '+', '*', '(', ')', 'd', '$'}; 
 int tokens_len[] = {0, 1, 1, 1, 1, 1, 1};
 
@@ -45,27 +44,27 @@ int goto_tbl[12][3] = {
     { 0, 0, 0 }
 };
 
-int get_token_index(char symbol) {
+int read_token(char symbol) {
     for (int i = 0; i < sizeof(tokens) / sizeof(char); ++i) {
         if (tokens[i] == symbol) return i;
     }
-    return -1;
+    return 0;
 }
 
-void push(int state) {
+void SHIFT(int shifting) {
     if (sp < MAX - 1) {
-        stack[++sp] = state;
+        stack[++sp] = shifting;
     } else {
-        printf("Stack overflow.\n");
+        printf("Error: Stack overflow.\n");
         exit(EXIT_FAILURE);
     }
 }
 
-void reduce(int rule) {
-    sp -= GR_len[rule - 1];
-    int NT_index = (NT[rule - 1] == 'E') ? 1 : (NT[rule - 1] == 'T') ? 2 : 3; 
-    int goto_state = goto_tbl[stack[sp]][NT_index - 1]; 
-    push(goto_state);
+void REDUCE(int reducing) {
+    sp -= GR_len[reducing - 1];
+    int NT_index = (NT[reducing - 1] == 'E') ? 1 : (NT[reducing - 1] == 'T') ? 2 : 3; 
+    int goto_shifting = goto_tbl[stack[sp]][NT_index - 1]; 
+    SHIFT(goto_shifting);
 }
 
 void LR_Parser(char* w) {
@@ -75,24 +74,22 @@ void LR_Parser(char* w) {
     while (w[ip] != '\0' && w[ip] != '$') { 
         int s = stack[sp]; 
         char a = w[ip]; 
-        int action = action_tbl[s][get_token_index(a)];
+        int action = action_tbl[s][read_token(a)];
 
         if (action > 0) { 
-            push(action); 
+            SHIFT(action); 
             ip++; 
         } else if (action < 0) { 
-            int rule = -action;
-            int b_len = GR_len[rule - 1]; 
+            int reducing = -action;
+            int b_len = GR_len[reducing - 1]; 
             sp -= 2 * b_len; 
             int s_prime = stack[sp];
-            
-            int A_index = NT[rule] - 'E'; 
-            int goto_state = goto_tbl[s_prime][A_index - 1];
-            push(goto_state);
-
-            printf("Reduce: %s\n", GR[rule - 1]); 
+            int A_index = NT[reducing] - 'E'; 
+            int goto_shifting = goto_tbl[s_prime][A_index - 1];
+            SHIFT(goto_shifting);
+            printf("ACCEPT:REDUCE: %s\n", GR[reducing - 1]); 
         } else if (action == 999) { 
-            printf("Parsing successful.\n");
+            printf("ACCEPT.\n");
             return;
         } else { 
             printf("error.\n");
