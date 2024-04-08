@@ -1,0 +1,18 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/seungwonlee/CWorkspace/parsingtable/testcode_term3/TokenType'
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _scan, symObjAddr: 0x0, symBinAddr: 0x1000036AC, symSize: 0x1A8 }
+  - { offsetInCU: 0x4D, offset: 0x4D, size: 0x8, addend: 0x0, symName: _action_table, symObjAddr: 0x8A0, symBinAddr: 0x100008000, symSize: 0x0 }
+  - { offsetInCU: 0xCF, offset: 0xCF, size: 0x8, addend: 0x0, symName: _gotoTable, symObjAddr: 0xC00, symBinAddr: 0x100008360, symSize: 0x0 }
+  - { offsetInCU: 0xF6, offset: 0xF6, size: 0x8, addend: 0x0, symName: _grammer, symObjAddr: 0xC90, symBinAddr: 0x1000083F0, symSize: 0x0 }
+  - { offsetInCU: 0x11C, offset: 0x11C, size: 0x8, addend: 0x0, symName: _stackTop, symObjAddr: 0xCC8, symBinAddr: 0x100008428, symSize: 0x0 }
+  - { offsetInCU: 0x131, offset: 0x131, size: 0x8, addend: 0x0, symName: _stateStack, symBinAddr: 0x10000842C, symSize: 0x0 }
+  - { offsetInCU: 0x181, offset: 0x181, size: 0x8, addend: 0x0, symName: _scan, symObjAddr: 0x0, symBinAddr: 0x1000036AC, symSize: 0x1A8 }
+  - { offsetInCU: 0x1A9, offset: 0x1A9, size: 0x8, addend: 0x0, symName: _initActionTable, symObjAddr: 0x1A8, symBinAddr: 0x100003854, symSize: 0xB8 }
+  - { offsetInCU: 0x1BE, offset: 0x1BE, size: 0x8, addend: 0x0, symName: _pushState, symObjAddr: 0x260, symBinAddr: 0x10000390C, symSize: 0x6C }
+  - { offsetInCU: 0x1E2, offset: 0x1E2, size: 0x8, addend: 0x0, symName: _popState, symObjAddr: 0x2CC, symBinAddr: 0x100003978, symSize: 0x5C }
+  - { offsetInCU: 0x1FB, offset: 0x1FB, size: 0x8, addend: 0x0, symName: _topState, symObjAddr: 0x328, symBinAddr: 0x1000039D4, symSize: 0x50 }
+  - { offsetInCU: 0x214, offset: 0x214, size: 0x8, addend: 0x0, symName: _getNextToken, symObjAddr: 0x378, symBinAddr: 0x100003A24, symSize: 0x180 }
+  - { offsetInCU: 0x23C, offset: 0x23C, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x4F8, symBinAddr: 0x100003BA4, symSize: 0x264 }
+...
