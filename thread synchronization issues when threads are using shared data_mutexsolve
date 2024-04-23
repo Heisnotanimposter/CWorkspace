@@ -1,0 +1,35 @@
+#include <pthread.h>
+#define MAX_THREAD 2
+
+void *threadcount(void *data) {
+    int *_count = (int *)data; 
+    int i;
+
+    for(i=0; i<100; ++i) {
+        // 아래의 코드 세 줄은 실제로는 여러 단계를 거쳐 실행되며,
+        // 여러 스레드가 동시에 접근할 경우 데이터 경합(Race Condition)이 발생할 수 있습니다.
+        // 따라서 이 부분을 임계 구역으로 보호해야 할 필요가 있습니다 (예: 뮤텍스 사용).
+        *_count = *_count + 1; 
+    }
+}
+
+int main(int argc, char *argv[]) {
+    pthread_t thread_id[MAX_THREAD];
+    int i;
+    int count = 0; 
+
+    for(i = 0; i < MAX_THREAD; ++i) {
+        // 스레드를 생성하여 threadcount 함수를 실행하며, count 변수의 주소를 전달합니다.
+        pthread_create(&thread_id[i], NULL, threadcount, (void *)&count);
+    }
+
+    for(i = 0; i < MAX_THREAD; ++i) {
+        // 모든 스레드가 종료될 때까지 대기합니다.
+        pthread_join(thread_id[i], NULL);
+    }
+
+    // 모든 스레드가 종료된 후, count 변수의 최종 값을 출력합니다.
+    // 스레드 동기화 없이 공유 데이터에 접근하였기 때문에 예상한 값(스레드 개수 x 100)과 다를 수 있습니다.
+    printf("Main Thread : %d\n", count); 
+    return 0; 
+}
